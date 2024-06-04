@@ -43,15 +43,28 @@ public class TaskService implements EntityService<Task, Long> {
     }
 
     @Override
-    public Page<Task>  getAll_sortedPaged(int pageNumber, int pageSize, String sortBy, Sort.Direction sortDirection) {
+    public Page<Task> getAll_sortedPaged(int pageNumber, int pageSize, String sortBy, Sort.Direction sortDirection) {
 
-        //default ascending
-        Sort sort  = Sort.by(sortBy).ascending();
+        Page<Task> tasks = null;
 
-        if ( sortDirection.equals( Sort.Direction.DESC )) sort = Sort.by(sortBy).descending();
+        try {
 
-        Pageable pageable = PageRequest.of(pageNumber,pageSize, sort );
+            //default ascending
+            Sort sort = Sort.by(sortBy).ascending();
 
-        return taskDao.findAll(pageable);
+            if (sortDirection.equals(Sort.Direction.DESC)) sort = Sort.by(sortBy).descending();
+
+            Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+            taskDao.findAll().forEach(System.out::println);
+            tasks = taskDao.findAll(pageable);
+
+        } catch (Exception e) {
+            System.out.println("ERROR+++++++++++++++++++++++++++++++++++++++++");
+            System.out.println(e.getMessage());
+        }
+
+        return  tasks;
     }
+
 }
