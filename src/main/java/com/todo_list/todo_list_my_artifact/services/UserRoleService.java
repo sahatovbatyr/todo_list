@@ -4,8 +4,11 @@ import com.todo_list.todo_list_my_artifact.dao.UserRoleDao;
 import com.todo_list.todo_list_my_artifact.exceptions.EntityNotFoundByIdException;
 import com.todo_list.todo_list_my_artifact.models.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,7 +32,9 @@ public class UserRoleService implements EntityService<UserRole, Long> {
 
     @Override
     public List<UserRole> getAll() {
-        return  userRoleDao.findAll();
+        List<UserRole> roles = userRoleDao.findAll();
+        roles.sort(Comparator.comparingLong(UserRole::getId));
+        return roles ;
     }
 
     @Override
@@ -41,4 +46,11 @@ public class UserRoleService implements EntityService<UserRole, Long> {
     public void update(UserRole entity) {
 
     }
+
+    @Override
+    public Page<UserRole> getAll_sortedPaged(int page, int size, String sortBy, Sort.Direction sortDirection) {
+        return null;
+    }
+
+
 }
