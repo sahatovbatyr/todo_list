@@ -2,20 +2,28 @@ package com.todo_list.todo_list_my_artifact.services;
 
 import com.todo_list.todo_list_my_artifact.dao.UserRoleDao;
 import com.todo_list.todo_list_my_artifact.exceptions.EntityNotFoundByIdException;
+import com.todo_list.todo_list_my_artifact.models.RoleType;
 import com.todo_list.todo_list_my_artifact.models.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class UserRoleService implements EntityService<UserRole, Long> {
+public class UserRoleService   implements EntityService<UserRole, Long> {
+
+
 
     @Autowired
     UserRoleDao userRoleDao;
+
+    public UserRole getByUserRole( RoleType roleType){
+       return userRoleDao.findByRoleType(roleType);
+    }
 
     @Override
     public void create(UserRole entity) {
@@ -32,7 +40,8 @@ public class UserRoleService implements EntityService<UserRole, Long> {
 
     @Override
     public List<UserRole> getAll() {
-        List<UserRole> roles = userRoleDao.findAll();
+        List<UserRole> roles = new ArrayList<>();
+        roles = userRoleDao.findAll();
         roles.sort(Comparator.comparingLong(UserRole::getId));
         return roles ;
     }

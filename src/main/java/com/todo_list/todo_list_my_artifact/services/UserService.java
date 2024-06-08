@@ -1,29 +1,74 @@
 package com.todo_list.todo_list_my_artifact.services;
 
 import com.todo_list.todo_list_my_artifact.dao.UserDao;
+import com.todo_list.todo_list_my_artifact.dao.UserRoleDao;
 import com.todo_list.todo_list_my_artifact.exceptions.UserNotFoundException;
+import com.todo_list.todo_list_my_artifact.models.RoleType;
 import com.todo_list.todo_list_my_artifact.models.User;
+import com.todo_list.todo_list_my_artifact.models.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
-public class UserService implements EntityService<User, Long> {
+public class UserService implements EntityService<User, Long>   {
 
     @Autowired
     UserDao userDao;
 
+//    @Autowired
+//    UserRoleDao userRoleDao;
+
+    /**
+     * Получение пользователя по имени пользователя
+     *
+     * @return пользователь
+     */
+    public User getByUsername(String username) {
+
+        return userDao.findByUsername(username);
+
+    }
+
+    /**
+     * Получение пользователя по имени пользователя
+     * <p>
+     * Нужен для Spring Security
+     *
+     * @return пользователь
+     */
+//    public UserDetailsService userDetailsService() {
+//        return this::getByUsername;
+//    }
+
+
 
     @Override
-    public void create(User entity) {
+    public void create(User user) {
+//        UserRole userRole_1 = userRoleDao.findByRoleType( RoleType.USER);
+//        UserRole userRole_2 = userRoleDao.findByRoleType( RoleType.USER);
+//
+//        Set<UserRole> roles = new HashSet<>();
+//        Collections.addAll(roles, userRole_1, userRole_2);
+//
+//        user.setRoles( roles );
 
-        userDao.save(entity);
+//        userRoleDao.findByRoleType( RoleType.USER );
+
+//        if (userDao.existsByUsername(user.getUsername()) ) {
+//            // Заменить на свои исключения
+//            throw new RuntimeException("Пользователь с таким именем уже существует");
+//        }
+
+//        if (userDao.existsByEmail(user.getEmail())) {
+//            throw new RuntimeException("Пользователь с таким email уже существует");
+//        }
+
+         userDao.save(user);
 
     }
 
