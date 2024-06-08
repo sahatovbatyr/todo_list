@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public interface UserDao_Custom   {
 
     List<User> findBy_specific( ) throws UserNotFoundException;

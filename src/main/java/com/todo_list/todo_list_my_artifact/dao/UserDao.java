@@ -13,6 +13,11 @@ import java.util.List;
 @Repository
 public interface UserDao extends JpaRepository<User, Long> {
 
-    @Query("SELECT DISTINCT u FROM User u JOIN u.roles r WHERE r.id=:roleType")
-    List<User> findUsers_byRoles_2(@Param("roleType") RoleType roleType) throws UserNotFoundException;
+//    @Query("SELECT DISTINCT u FROM users u JOIN u.roles r WHERE r.id=:roleType")
+//    List<User> findUsers_byRoles_2(@Param("roleType") RoleType roleType) throws UserNotFoundException;
+
+    User findByUsername(String username) throws UserNotFoundException;
+
+//    boolean existsByUsername(String username);
+//    boolean existsByEmail(String email);
 }
