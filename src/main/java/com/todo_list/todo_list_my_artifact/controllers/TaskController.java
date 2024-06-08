@@ -8,7 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/task")
+@RequestMapping("/auth/task")
 public class TaskController {
 
     @Autowired
@@ -33,6 +33,12 @@ public class TaskController {
             System.out.println(ex.getMessage());
         }
         return null;
+
+    }
+
+    @GetMapping("/hello")
+    public String getAllTasks_sorted(  ){
+        return "HELLO WORLD";
 
     }
 
