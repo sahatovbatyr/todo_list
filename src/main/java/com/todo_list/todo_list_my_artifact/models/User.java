@@ -6,8 +6,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 //import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Builder
@@ -16,9 +20,8 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users" )
-public class User  {
+public class User implements UserDetails {
 
-// implements UserDetails
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,44 +54,44 @@ public class User  {
 
 
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        List<SimpleGrantedAuthority> authorities;
-//
-//        authorities = getRoles().stream()
-//                .map( p-> new SimpleGrantedAuthority( p.getRoleType().getDisplayeName() ) )
-//                .collect(Collectors.toList());
-//        return authorities;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
-//
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities;
 
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("{");
-//        sb.append("\"id\": \"").append(getId()).append("\", ");
-//        sb.append("\"name\": \"").append(this.username).append("\", ");
-//        sb.append("\"password\": \"[PROTECTED]\"").append("}");
-//        return sb.toString();
-//    }
+        authorities = getRoles().stream()
+                .map( p-> new SimpleGrantedAuthority( p.getRoleType().getDisplayeName() ) )
+                .collect(Collectors.toList());
+        return authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\"id\": \"").append(getId()).append("\", ");
+        sb.append("\"name\": \"").append(this.username).append("\", ");
+        sb.append("\"password\": \"[PROTECTED]\"").append("}");
+        return sb.toString();
+    }
 
 }
