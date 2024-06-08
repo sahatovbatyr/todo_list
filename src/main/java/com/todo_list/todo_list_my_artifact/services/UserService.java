@@ -41,9 +41,9 @@ public class UserService implements EntityService<User, Long>   {
      *
      * @return пользователь
      */
-//    public UserDetailsService userDetailsService() {
-//        return this::getByUsername;
-//    }
+    public UserDetailsService userDetailsService() {
+        return this::getByUsername;
+    }
 
 
 
