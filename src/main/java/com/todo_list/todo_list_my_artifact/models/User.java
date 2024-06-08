@@ -1,83 +1,94 @@
 package com.todo_list.todo_list_my_artifact.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import jakarta.persistence.*;
+//import javax.persistence.*;
+import java.util.*;
 
 @Entity
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users" )
-public class User {
+public class User  {
+
+// implements UserDetails
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @NotNull
     @Column(name = "password")
     private String password;
 
+//    private boolean isActive;
+
+
     @ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "users_and_roles",
-            joinColumns = @JoinColumn(name = "user_id", nullable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false, updatable = false))
+            joinColumns = @JoinColumn(name = "user_id", nullable = false ),
+            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false ))
     @JsonIgnore
     private Set<UserRole> roles ;
 
-    @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Task> createdTasks = new ArrayList<>() ;
+//    @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<Task> createdTasks = new ArrayList<>() ;
 
 //    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private List<Task> assignedTasks = new ArrayList<>();
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
 
-    public Long getId() {
-        return id;
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        List<SimpleGrantedAuthority> authorities;
+//
+//        authorities = getRoles().stream()
+//                .map( p-> new SimpleGrantedAuthority( p.getRoleType().getDisplayeName() ) )
+//                .collect(Collectors.toList());
+//        return authorities;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
+//
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("{");
+//        sb.append("\"id\": \"").append(getId()).append("\", ");
+//        sb.append("\"name\": \"").append(this.username).append("\", ");
+//        sb.append("\"password\": \"[PROTECTED]\"").append("}");
+//        return sb.toString();
+//    }
 
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<UserRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<UserRole> roles) {
-        this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                '}';
-    }
 }
