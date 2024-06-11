@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 //@Repository
 public interface UserRoleDao extends JpaRepository<UserRole, Long> {
 
-    UserRole  findByRoleType(RoleType roleType);
+    UserRole  findByRoletype(RoleType roleType);
 
 }

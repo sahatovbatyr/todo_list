@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 //@Schema(description = "Запрос на регистрацию")
-public class SignUpRequest {
+public class SignUpRequestDto {
 
 //    @Schema(description = "Имя пользователя", example = "Jon")
     @Size(min = 5, max = 50, message = "Имя пользователя должно содержать от 5 до 50 символов")

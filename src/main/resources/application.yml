@@ -1,4 +1,9 @@
 #  https://medium.com/@yohanesdwikiwitman/spring-boot-3-template-part-2-configuring-application-yml-d147b97c9d35
+logging:
+  level.root: ERROR
+  level.web: trace
+  level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+
 
 yaml:
   name: application.yml
@@ -52,6 +57,9 @@ spring:
 token:
   signing:
     key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
+    lifetime: 30m
+
+
 
   #spring.application.name=todo_list
   #

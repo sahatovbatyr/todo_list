@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/test_conn")
 @RequiredArgsConstructor
@@ -19,6 +21,12 @@ public class _HelloController {
 //    @Operation (summary = "Доступен только авторизованным пользователям")
     public String hello() {
         return "Hello, world!";
+    }
+
+    @GetMapping("/get-name")
+//    @Operation (summary = "Доступен только авторизованным пользователям")
+    public String getUserName(Principal principal) {
+        return "Hello, "+ principal.getName();
     }
 
     @GetMapping("/admin")

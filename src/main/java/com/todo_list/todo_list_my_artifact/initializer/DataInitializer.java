@@ -33,7 +33,7 @@ public class DataInitializer implements ApplicationRunner {
             for(RoleType iRoleType: RoleType.values()) {
 
                 UserRole newRole = new UserRole();
-                newRole.setRoleType( iRoleType );
+                newRole.setRoletype( iRoleType );
 
                 userRoleService.create( newRole  );
             }

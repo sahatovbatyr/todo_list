@@ -22,7 +22,7 @@ public class UserRoleService   implements EntityService<UserRole, Long> {
     UserRoleDao userRoleDao;
 
     public UserRole getByUserRole( RoleType roleType){
-       return userRoleDao.findByRoleType(roleType);
+       return userRoleDao.findByRoletype(roleType);
     }
 
     @Override

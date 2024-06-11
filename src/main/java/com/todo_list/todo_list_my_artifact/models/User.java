@@ -59,7 +59,7 @@ public class User implements UserDetails {
         List<SimpleGrantedAuthority> authorities;
 
         authorities = getRoles().stream()
-                .map( p-> new SimpleGrantedAuthority( p.getRoleType().getDisplayeName() ) )
+                .map( r-> new SimpleGrantedAuthority( r.getRoletype().name() ) )
                 .collect(Collectors.toList());
         return authorities;
     }

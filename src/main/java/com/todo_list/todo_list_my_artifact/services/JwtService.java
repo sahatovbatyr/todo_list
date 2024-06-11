@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class JwtService {
 
     @Value("${token.signing.key}")
     private String jwtSigningKey;
+
+    @Value("${token.signing.lifetime}")
+    private Duration jwtLifetime;
 
     /**
      * Извлечение имени пользователя из токена
@@ -48,7 +52,10 @@ public class JwtService {
             claims.put("id", customUserDetails.getId());
             claims.put("roles", customUserDetails.getRoles());
         }
-        return generateToken(claims, userDetails);
+        return Jwts.builder().setClaims(claims).setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtLifetime.toMillis()))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
     /**
@@ -83,12 +90,12 @@ public class JwtService {
      * @param userDetails данные пользователя
      * @return токен
      */
-    private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
-    }
+//    private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+//        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
+//                .setIssuedAt(new Date(System.currentTimeMillis()))
+//                .setExpiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
+//                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
+//    }
 
     /**
      * Проверка токена на просроченность

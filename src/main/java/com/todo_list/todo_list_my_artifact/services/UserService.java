@@ -9,7 +9,9 @@ import com.todo_list.todo_list_my_artifact.models.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -32,17 +34,6 @@ public class UserService implements EntityService<User, Long>   {
 
         return userDao.findByUsername(username);
 
-    }
-
-    /**
-     * Получение пользователя по имени пользователя
-     * <p>
-     * Нужен для Spring Security
-     *
-     * @return пользователь
-     */
-    public UserDetailsService userDetailsService() {
-        return this::getByUsername;
     }
 
 

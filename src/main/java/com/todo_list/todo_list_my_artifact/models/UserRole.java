@@ -25,9 +25,9 @@ public class UserRole {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    @Column(name = "role_type", unique = true)
+    @Column(name = "role", unique = true)
     @JsonIgnore
-    private RoleType roleType;
+    private RoleType roletype;
 
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore
