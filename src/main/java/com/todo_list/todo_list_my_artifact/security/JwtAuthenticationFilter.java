@@ -1,10 +1,5 @@
-package com.todo_list.todo_list_my_artifact.config;
+package com.todo_list.todo_list_my_artifact.security;
 
-import com.todo_list.todo_list_my_artifact.services.JwtService;
-import com.todo_list.todo_list_my_artifact.services.MyUserDetailsService;
-import com.todo_list.todo_list_my_artifact.services.UserService;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,7 +34,7 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
 
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String HEADER_NAME = "Authorization";
-    private final JwtService jwtService;
+    private final JwtTokenProvider jwtTokenProvider;
 //    private final UserService userService;
     private final MyUserDetailsService userDetailsService;
 
@@ -62,48 +57,27 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
         // Обрезаем префикс и получаем имя пользователя из токена
         var jwt = authHeader.substring(BEARER_PREFIX.length());
 
-//        try {
-            var username = jwtService.extractUserName(jwt);
+        var username = jwtTokenProvider.getUsername(jwt);
 
-            if (StringUtils.isNotEmpty(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (StringUtils.isNotEmpty(username)
+                && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                // Если токен валиден, то аутентифицируем пользователя
-                if (jwtService.isTokenValid(jwt, userDetails)) {
-                    SecurityContext context = SecurityContextHolder.createEmptyContext();
+            // Если токен валиден, то аутентифицируем пользователя
+            if (jwtTokenProvider.isValid(jwt )) {
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
-                    );
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
+                );
 
-                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    context.setAuthentication(authToken);
-                    SecurityContextHolder.setContext(context);
-                }
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                context.setAuthentication(authToken);
+                SecurityContextHolder.setContext(context);
             }
-
-//        } catch ( ExpiredJwtException ex) {
-//            LOGGER.error( "Token period expired!!!" );
-//            response.setStatus(401);
-//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token period expired! JWT аутентификация не удалась");
-//
-//        } catch ( SignatureException ex) {
-//            LOGGER.error( "Signing ERROR");
-//            response.setStatus(401);
-//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT аутентификация не удалась.Signing ERROR");
-//
-//        } catch ( Exception ex) {
-//            response.setStatus(401);
-//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT аутентификация не удалась"+ex.getMessage());
-//
-//
-//        }
-
-
-
+        }
         filterChain.doFilter(request, response);
-
     }
 }
