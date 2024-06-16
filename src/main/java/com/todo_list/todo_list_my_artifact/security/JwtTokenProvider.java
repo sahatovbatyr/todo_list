@@ -1,8 +1,7 @@
 package com.todo_list.todo_list_my_artifact.security;
 
 import com.todo_list.todo_list_my_artifact.authDTO.JwtResponseDto;
-import com.todo_list.todo_list_my_artifact.exceptioncs.JwtAuthenticationException;
-import com.todo_list.todo_list_my_artifact.models.RoleType;
+import com.todo_list.todo_list_my_artifact.exceptions.JwtAuthenticationException;
 import com.todo_list.todo_list_my_artifact.models.User;
 import com.todo_list.todo_list_my_artifact.models.UserRole;
 import com.todo_list.todo_list_my_artifact.props.JwtProperties;
@@ -19,11 +18,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
