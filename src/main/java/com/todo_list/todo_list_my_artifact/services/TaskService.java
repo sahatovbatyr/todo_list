@@ -23,6 +23,7 @@ public class TaskService implements EntityService<Task, Long> {
         this.taskDao = taskDao;
     }
 
+
     @Override
     public void create(Task task) {
 //        Task newTask = new Task();
@@ -43,7 +44,7 @@ public class TaskService implements EntityService<Task, Long> {
 
     @Override
     public List<Task> getAll() {
-        return List.of();
+        return taskDao.findAll();
     }
 
     @Override
@@ -52,7 +53,8 @@ public class TaskService implements EntityService<Task, Long> {
     }
 
     @Override
-    public void update(Task entity) {
+    public void update(Task task) {
+        taskDao.save( task);
 
     }
 

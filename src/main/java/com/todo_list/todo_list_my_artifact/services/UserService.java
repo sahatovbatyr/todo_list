@@ -22,19 +22,20 @@ public class UserService implements EntityService<User, Long>   {
     @Autowired
     UserDao userDao;
 
-//    @Autowired
-//    UserRoleDao userRoleDao;
-
-    /**
-     * Получение пользователя по имени пользователя
-     *
-     * @return пользователь
-     */
-    public User getByUsername(String username) {
-
-        return userDao.findByUsername(username);
-
-    }
+////    @Autowired
+////    UserRoleDao userRoleDao;
+//
+//    /**
+//     * Получение пользователя по имени пользователя
+//     *
+//     * @return пользователь
+//     */
+//    public User getByUsername(String username) {
+//
+//        return userDao.findByUsername(username)
+//                .orElseThrow(()-> new UserNotFoundException("User not found:"+ username));
+//
+//    }
 
 
 
@@ -67,6 +68,11 @@ public class UserService implements EntityService<User, Long>   {
     public User findById(Long id) {
         return userDao.findById(id)
                 .orElseThrow( ()-> new UserNotFoundException("Not found user with Id:"+id));
+    }
+
+    public User findByUsername(String username)  {
+        return userDao.findByUsername(username)
+                .orElseThrow( ()-> new UserNotFoundException("Not found user with Id:"+username));
     }
 
     @Override

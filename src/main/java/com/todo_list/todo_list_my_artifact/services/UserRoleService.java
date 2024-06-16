@@ -22,7 +22,8 @@ public class UserRoleService   implements EntityService<UserRole, Long> {
     UserRoleDao userRoleDao;
 
     public UserRole getByUserRole( RoleType roleType){
-       return userRoleDao.findByRoletype(roleType);
+       return userRoleDao.findByRoletype(roleType)
+               .orElseThrow( ()-> new EntityNotFoundByIdException("UserRole not found:"+roleType.name()) );
     }
 
     @Override
