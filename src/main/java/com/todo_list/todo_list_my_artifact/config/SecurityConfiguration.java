@@ -1,6 +1,7 @@
 package com.todo_list.todo_list_my_artifact.config;
 
-import com.todo_list.todo_list_my_artifact.services.MyUserDetailsService;
+import com.todo_list.todo_list_my_artifact.security.JwtAuthenticationFilter;
+import com.todo_list.todo_list_my_artifact.security.MyUserDetailsService;
 import com.todo_list.todo_list_my_artifact.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -41,11 +43,8 @@ public class SecurityConfiguration {
     private final YamlConfig yamlConfig;
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final UserService userService;
-    private final MyUserDetailsService userDetailService;
+    private final MyUserDetailsService userDetailsService;
 
-    @Autowired
-    private MyUserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -86,7 +85,7 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailService);
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
