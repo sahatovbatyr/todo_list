@@ -1,4 +1,4 @@
-package com.todo_list.todo_list_my_artifact.exceptioncs;
+package com.todo_list.todo_list_my_artifact.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
