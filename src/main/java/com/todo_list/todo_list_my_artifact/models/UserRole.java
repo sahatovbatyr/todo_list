@@ -26,11 +26,9 @@ public class UserRole {
     @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "role", unique = true)
-    @JsonIgnore
     private RoleType roletype;
 
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
 

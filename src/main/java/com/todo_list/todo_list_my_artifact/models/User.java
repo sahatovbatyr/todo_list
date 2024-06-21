@@ -42,7 +42,6 @@ public class User {
     @JoinTable(name = "users_and_roles",
             joinColumns = @JoinColumn(name = "user_id", nullable = false ),
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false ))
-    @JsonIgnore
     private Set<UserRole> roles ;
 
 //    @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

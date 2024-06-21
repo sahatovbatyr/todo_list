@@ -35,8 +35,8 @@ public class Task {
     private String desciption;
 
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false )
-    private Date task_date;
+    @Column(name = "task_date", nullable = false )
+    private Date taskDate;
 
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -44,15 +44,8 @@ public class Task {
     @JsonIgnore
     private User assignedTo;
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", autor=" + autor +
-                ", title='" + title + '\'' +
-                ", desciption='" + desciption + '\'' +
-                ", task_date=" + task_date +
-                ", assignedTo=" + assignedTo +
-                '}';
-    }
+    @Column(name = "is_completed", nullable = false )
+    private boolean competed;
+
+
 }
