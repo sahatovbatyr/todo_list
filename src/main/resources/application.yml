@@ -1,8 +1,10 @@
 #  https://medium.com/@yohanesdwikiwitman/spring-boot-3-template-part-2-configuring-application-yml-d147b97c9d35
 logging:
-  level.root: error
+  level.root: info
   level.web: TRACE
-  level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+  level.org.springframework.web.filter.CommonsRequestLoggingFilter: debug
+  level.org.hibernate.sql: debug
+  level.org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 
 yaml:
@@ -53,6 +55,7 @@ spring:
         format_sql: true
 #        dialect: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: update
+        use_sql_comments: true
 
 token:
   jwt:
