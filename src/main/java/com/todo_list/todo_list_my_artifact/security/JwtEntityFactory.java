@@ -13,21 +13,25 @@ public final class JwtEntityFactory {
 
     public static JwtEntity create (User user) {
 
+        List<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
+                .map( ur->  new SimpleGrantedAuthority(ur.getRoletype().name()) )
+                .collect( Collectors.toList() );
+
         return new JwtEntity(
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
-                mapToGrantedAuthorities(new ArrayList<>(user.getRoles()))
+                grantedAuthorities
         );
 
     }
 
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(final List<UserRole> roles ) {
-        return roles.stream()
-                .map( r-> new SimpleGrantedAuthority(r.getRoletype().name()) )
-                .collect(Collectors.toList());
-    }
+//    private static List<GrantedAuthority> mapToGrantedAuthorities(final List<UserRole> roles ) {
+//        return roles.stream()
+//                .map( r-> new SimpleGrantedAuthority(r.getRoletype().name()) )
+//                .collect(Collectors.toList());
+//    }
 
 
 }
