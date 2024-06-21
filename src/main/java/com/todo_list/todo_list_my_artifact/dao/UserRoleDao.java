@@ -4,6 +4,7 @@ import com.todo_list.todo_list_my_artifact.exceptions.EntityNotFoundException;
 import com.todo_list.todo_list_my_artifact.models.RoleType;
 import com.todo_list.todo_list_my_artifact.models.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
