@@ -29,6 +29,7 @@ public class UserRole {
     private RoleType roletype;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
 

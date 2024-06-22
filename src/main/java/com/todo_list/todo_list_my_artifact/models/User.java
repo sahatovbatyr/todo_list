@@ -32,13 +32,15 @@ public class User {
     private String username;
 
     @NotNull
-    @Column(name = "password")
+    @Column(name = "password",  nullable = false)
     private String password;
 
-//    private boolean isActive;
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
 
 
-    @ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @ManyToMany( fetch = FetchType.LAZY )
     @JoinTable(name = "users_and_roles",
             joinColumns = @JoinColumn(name = "user_id", nullable = false ),
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false ))

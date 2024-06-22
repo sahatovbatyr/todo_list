@@ -24,7 +24,6 @@ public class Task {
 
     @ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "autor_id", nullable = false)
-    @JsonIgnore
     private User autor;
 
 
@@ -41,11 +40,10 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "assignedto_id", nullable = false )
-    @JsonIgnore
     private User assignedTo;
 
     @Column(name = "is_completed", nullable = false )
-    private boolean competed;
+    private boolean completed;
 
 
 }

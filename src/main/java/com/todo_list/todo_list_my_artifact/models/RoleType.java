@@ -6,26 +6,27 @@ public enum RoleType  {
     USER("USER"),
     GUEST("GUEST");
 
-    private String displayName;
+    private final String displayName;
 
     RoleType( String displayName){
         this.displayName = displayName;
     }
 
-    public String getDisplayeName() {
+    public String getDisplayName() {
         return displayName;
     }
 
-    public static RoleType getOne_byDisplayName(String displayName){
+//    public static RoleType getOne_byDisplayName(String displayName){
+//
+//        for(RoleType role: RoleType.values() ) {
+//            if( role.getDisplayName().equals(displayName)) {
+//                return role;
+//            }
+//        }
+//
+//        throw new IllegalArgumentException("Unknown display name on RoleType: "+displayName);
+//    }
 
-        for(RoleType role: RoleType.values() ) {
-            if( role.getDisplayeName().equals(displayName)) {
-                return role;
-            }
-        }
-
-        throw new IllegalArgumentException("Unknown display name on RoleType: "+displayName);
-    }
 
 
 }
