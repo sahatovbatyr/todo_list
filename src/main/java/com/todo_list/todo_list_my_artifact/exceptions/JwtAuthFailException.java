@@ -1,11 +1,11 @@
 package com.todo_list.todo_list_my_artifact.exceptions;
 
-public class JwtAuthenticationException extends RuntimeException {
-    public JwtAuthenticationException(String message) {
+public class JwtAuthFailException extends RuntimeException {
+    public JwtAuthFailException(String message) {
         super(message);
     }
 
-    public JwtAuthenticationException(String message, Throwable cause) {
+    public JwtAuthFailException(String message, Throwable cause) {
         super(message, cause);
     }
 }
