@@ -33,8 +33,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
 @RequiredArgsConstructor( onConstructor_ = @__(@Lazy))
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration {
 
     Logger LOGGER = LogManager.getLogger(SecurityConfiguration.class);
