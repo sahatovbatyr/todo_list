@@ -1,7 +1,7 @@
 package com.todo_list.todo_list_my_artifact.security;
 
 import com.todo_list.todo_list_my_artifact.authDTO.JwtResponseDto;
-import com.todo_list.todo_list_my_artifact.exceptions.JwtAuthenticationException;
+import com.todo_list.todo_list_my_artifact.exceptions.JwtAuthFailException;
 import com.todo_list.todo_list_my_artifact.models.User;
 import com.todo_list.todo_list_my_artifact.models.UserRole;
 import com.todo_list.todo_list_my_artifact.props.JwtProperties;
@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -33,14 +34,13 @@ public class JwtTokenProvider {
     Logger LOGGER = LogManager.getLogger(JwtTokenProvider.class);
 
     private final JwtProperties jwtProperties;
-
-    private final MyUserDetailsService myUserDetailsService;
+    private final UserDetailsService userDetailsService;
     private final UserService userService;
-    private SecretKey key;
+    private SecretKey secretKey;
 
     @PostConstruct
     public void init() {
-        this.key = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes());
+        this.secretKey = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes());
     }
 
     public String createAccessToken(
@@ -61,7 +61,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .claims(claims)
                 .expiration(expirationDate)
-                .signWith(key)
+                .signWith(secretKey)
                 .compact();
     }
 
@@ -84,7 +84,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .claims(claims)
                 .expiration(expirationDate)
-                .signWith(key)
+                .signWith(secretKey)
                 .compact();
     }
 
@@ -94,7 +94,7 @@ public class JwtTokenProvider {
         JwtResponseDto jwtResponse = new JwtResponseDto();
         if (!isValid(refreshToken)) {
             LOGGER.info("Not valid Token:");
-            throw new JwtAuthenticationException("Access denied.");
+            throw new JwtAuthFailException("Access denied.");
         }
         Long userId = Long.valueOf(getId(refreshToken));
         User user = userService.findById(userId);
@@ -112,7 +112,7 @@ public class JwtTokenProvider {
     public boolean isValid( final String token  ) {
         Jws<Claims> claims = Jwts
                 .parser()
-                .verifyWith(key)
+                .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token);
         return claims.getPayload()
@@ -123,7 +123,7 @@ public class JwtTokenProvider {
     private String getId( final String token ) {
         return Jwts
                 .parser()
-                .verifyWith(key)
+                .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
@@ -133,7 +133,7 @@ public class JwtTokenProvider {
     public String getUsername( final String token ) {
         return Jwts
                 .parser()
-                .verifyWith(key)
+                .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
@@ -142,7 +142,7 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(final String token ) {
         String username = getUsername(token);
-        UserDetails userDetails = myUserDetailsService.loadUserByUsername( username );
+        UserDetails userDetails = userDetailsService.loadUserByUsername( username );
         return new UsernamePasswordAuthenticationToken(
                 userDetails,
                 "",
