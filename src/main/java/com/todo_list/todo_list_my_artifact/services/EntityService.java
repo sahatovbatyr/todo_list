@@ -5,12 +5,14 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
-public interface EntityService<T, ID> {
+public interface EntityService<T,D, ID> {
 
-    void create(T entity) ;
+    T create(T entity) ;
+    T createByDto( D dto);
     T findById(ID id);
     List<T> getAll();
     void delete(T entity);
+    void deleteById(ID id);
     void update(T entity);
     Page<T> getAll_sortedPaged(int page, int size, String sortBy, Sort.Direction sortDirection);
 
