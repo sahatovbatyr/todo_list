@@ -22,7 +22,7 @@ public class Task {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn(name = "autor_id", nullable = false)
     private User autor;
 
@@ -38,7 +38,7 @@ public class Task {
     private Date taskDate;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "assignedto_id", nullable = false )
     private User assignedTo;
 
