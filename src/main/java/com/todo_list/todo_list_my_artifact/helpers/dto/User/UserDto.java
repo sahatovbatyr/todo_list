@@ -1,4 +1,4 @@
-package com.todo_list.todo_list_my_artifact.helpers.dto;
+package com.todo_list.todo_list_my_artifact.helpers.dto.User;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.todo_list.todo_list_my_artifact.helpers.validation_groups.OnCreate;
@@ -9,7 +9,6 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 public class UserDto {

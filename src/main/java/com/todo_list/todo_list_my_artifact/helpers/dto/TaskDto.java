@@ -1,11 +1,10 @@
 package com.todo_list.todo_list_my_artifact.helpers.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.todo_list.todo_list_my_artifact.helpers.dto.User.UserIdDto;
 import com.todo_list.todo_list_my_artifact.helpers.validation_groups.OnCreate;
 import com.todo_list.todo_list_my_artifact.helpers.validation_groups.OnDelete;
 import com.todo_list.todo_list_my_artifact.helpers.validation_groups.OnUpdate;
-import com.todo_list.todo_list_my_artifact.models.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

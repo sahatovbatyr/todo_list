@@ -1,4 +1,4 @@
-package com.todo_list.todo_list_my_artifact.helpers.dto;
+package com.todo_list.todo_list_my_artifact.helpers.dto.User;
 
 import com.todo_list.todo_list_my_artifact.helpers.validation_groups.OnCreate;
 import com.todo_list.todo_list_my_artifact.helpers.validation_groups.OnUpdate;

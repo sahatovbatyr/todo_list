@@ -1,6 +1,6 @@
 package com.todo_list.todo_list_my_artifact.helpers.mappers;
 
-import com.todo_list.todo_list_my_artifact.helpers.dto.UserRoleDto;
+import com.todo_list.todo_list_my_artifact.helpers.dto.User.UserRoleDto;
 import com.todo_list.todo_list_my_artifact.models.UserRole;
 import org.mapstruct.Mapper;
 
